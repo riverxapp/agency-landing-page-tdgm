@@ -1,66 +1,341 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edit Me</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      color-scheme: light;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f1e8" />
+    <meta name="description" content="Goodside is an independent creative studio building thoughtful brands for a world that doesn't need more of the same." />
+    <title>Goodside® — Independent creative studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f4f1e8;
+        --ink: #1d2922;
+        --muted: #72766b;
+        --line: #d9d7cb;
+        --tomato: #e65b3f;
+        --lime: #dce65f;
+        --mono: "DM Mono", monospace;
+        --sans: "DM Sans", sans-serif;
+        --serif: "Playfair Display", Georgia, serif;
+      }
 
-    * {
-      box-sizing: border-box;
-    }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+      a { color: inherit; text-decoration: none; }
+      button { font: inherit; }
+      img { display: block; width: 100%; }
+      .wrap { width: min(1376px, calc(100% - 96px)); margin-inline: auto; }
+      .eyebrow { font: 500 11px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+      .arrow-link { display: inline-flex; align-items: center; gap: 12px; border-bottom: 1px solid currentColor; padding-bottom: 7px; font-size: 14px; font-weight: 600; }
+      .arrow-link svg { width: 15px; transition: transform .2s ease; }
+      .arrow-link:hover svg { transform: translate(3px, -3px); }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #ffffff;
-      color: #111111;
-      font-family: "Inter", sans-serif;
-    }
+      .site-header { height: 88px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+      .brand { display: inline-flex; gap: 10px; align-items: center; font-size: 21px; font-weight: 700; letter-spacing: -.07em; }
+      .brand-mark { width: 22px; height: 22px; display: grid; place-items: center; background: var(--tomato); border-radius: 50%; color: var(--paper); font-size: 15px; line-height: 1; }
+      .brand sup { font: 400 9px var(--mono); letter-spacing: 0; align-self: flex-start; margin: 1px 0 0 -7px; }
+      .nav-links { display: flex; align-items: center; gap: 38px; }
+      .nav-links a { font-size: 13px; font-weight: 500; transition: color .2s; }
+      .nav-links a:hover { color: var(--tomato); }
+      .nav-links .nav-cta { padding: 12px 17px; border: 1px solid var(--ink); border-radius: 2px; }
+      .nav-links .nav-cta:hover { background: var(--ink); color: var(--paper); }
+      .menu-toggle { display: none; border: 0; background: transparent; color: var(--ink); padding: 8px 0 8px 8px; cursor: pointer; }
 
-    main {
-      width: min(28rem, calc(100vw - 2rem));
-      text-align: center;
-    }
+      .hero { min-height: 660px; display: grid; grid-template-columns: 1fr .92fr; align-items: center; gap: 6%; padding-block: 72px 88px; }
+      .hero-copy { position: relative; z-index: 1; padding-block: 20px; }
+      .hero-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 29px; color: var(--muted); }
+      .hero-kicker::before { content: ""; width: 24px; height: 1px; background: var(--tomato); }
+      h1 { max-width: 700px; margin: 0; font-size: clamp(64px, 8.2vw, 120px); font-weight: 500; line-height: .91; letter-spacing: -.085em; }
+      h1 em { color: var(--tomato); font-family: var(--serif); font-weight: 600; letter-spacing: -.09em; }
+      .hero-bottom { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-top: 39px; }
+      .hero-bottom p { max-width: 310px; margin: 0; color: #555d53; font-size: 15px; line-height: 1.65; }
+      .hero-art { position: relative; min-height: 492px; background: var(--lime); overflow: hidden; }
+      .hero-art::before, .hero-art::after { content: ""; position: absolute; border: 1px solid rgba(29, 41, 34, .28); border-radius: 50%; aspect-ratio: 1; }
+      .hero-art::before { width: 84%; top: 8%; left: 8%; }
+      .hero-art::after { width: 66%; top: 17%; left: 17%; }
+      .flower-art { position: absolute; width: 83%; height: 83%; inset: 8.5%; }
+      .art-caption { position: absolute; left: 24px; bottom: 21px; z-index: 1; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+      .art-index { position: absolute; top: 22px; right: 22px; z-index: 1; font: 10px var(--mono); }
+      .art-sticker { position: absolute; z-index: 1; right: 8%; bottom: 15%; width: 96px; aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: var(--tomato); color: var(--paper); text-align: center; font: 10px/1.4 var(--mono); letter-spacing: .05em; transform: rotate(11deg); }
 
-    .icon {
-      width: 3rem;
-      height: 3rem;
-      margin: 0 auto 1rem;
-      display: block;
-      color: #111111;
-    }
+      .ticker { border-block: 1px solid var(--ink); overflow: hidden; }
+      .ticker-track { display: flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 75px; white-space: nowrap; }
+      .ticker span { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+      .ticker .dot { color: var(--tomato); font-size: 19px; }
 
-    h1 {
-      margin: 0 0 0.5rem;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
+      .work-section { padding-block: 119px 132px; }
+      .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 36px; margin-bottom: 42px; }
+      .section-heading .eyebrow { color: var(--muted); margin-bottom: 18px; }
+      h2 { margin: 0; font-size: clamp(40px, 5.2vw, 72px); font-weight: 500; letter-spacing: -.075em; line-height: .98; }
+      h2 em { font-family: var(--serif); font-weight: 600; }
+      .section-heading > p { max-width: 280px; margin: 0 0 4px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+      .project-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 58px 26px; }
+      .project:nth-child(2) { margin-top: 116px; }
+      .project:nth-child(3) { width: 78%; }
+      .project-image { position: relative; overflow: hidden; background: #ded9cc; aspect-ratio: 1.12; }
+      .project:nth-child(2) .project-image { aspect-ratio: .98; }
+      .project:nth-child(3) .project-image { aspect-ratio: 1.28; }
+      .project-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+      .project:hover .project-image img { transform: scale(1.035); }
+      .project-label { position: absolute; top: 16px; left: 16px; padding: 9px 11px; background: var(--paper); font: 10px var(--mono); text-transform: uppercase; letter-spacing: .07em; }
+      .project-meta { display: flex; align-items: start; justify-content: space-between; gap: 20px; padding-top: 17px; }
+      .project-meta h3 { margin: 0 0 5px; font-size: 19px; font-weight: 600; letter-spacing: -.04em; }
+      .project-meta p { margin: 0; color: var(--muted); font-size: 12px; }
+      .project-meta .year { font: 10px var(--mono); color: var(--muted); }
 
-    p {
-      margin: 0;
-      font-size: 1rem;
-      line-height: 1.5;
-      color: #444444;
-    }
-  </style>
-</head>
-<body>
-  <main>
-    <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 3L4 7V12C4 17 7.4 20.9 12 22C16.6 20.9 20 17 20 12V7L12 3Z" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M9.5 12L11.25 13.75L15 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <h1>Open for Editing</h1>
-    <p>Agent: edit this page freely and keep it simple.</p>
-  </main>
-</body>
+      .manifesto { padding-block: 88px 94px; background: #e9e6dc; }
+      .manifesto-grid { display: grid; grid-template-columns: .65fr 1.35fr; gap: 8%; }
+      .manifesto-label { color: var(--muted); padding-top: 8px; }
+      .manifesto-copy h2 { max-width: 900px; font-size: clamp(43px, 6.3vw, 86px); line-height: 1.03; }
+      .manifesto-copy h2 em { color: var(--tomato); }
+      .manifesto-bottom { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-top: 45px; }
+      .manifesto-bottom p { max-width: 390px; margin: 0; color: #555d53; font-size: 14px; line-height: 1.75; }
+
+      .services { padding-block: 122px 128px; }
+      .services-top { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 54px; }
+      .services-top .eyebrow { color: var(--muted); margin-bottom: 18px; }
+      .services-top > p { max-width: 285px; margin: 0 0 4px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+      .service-list { border-top: 1px solid var(--line); }
+      .service-row { display: grid; grid-template-columns: 70px 1fr 1fr 28px; align-items: center; gap: 25px; min-height: 91px; border-bottom: 1px solid var(--line); }
+      .service-number { color: var(--tomato); font: 11px var(--mono); }
+      .service-row h3 { margin: 0; font-size: 23px; font-weight: 500; letter-spacing: -.045em; }
+      .service-row p { margin: 0; color: var(--muted); font-size: 13px; }
+      .service-row svg { width: 18px; justify-self: end; }
+
+      .contact { position: relative; overflow: hidden; padding-block: 91px 84px; background: var(--ink); color: var(--paper); }
+      .contact::after { content: ""; position: absolute; width: 410px; aspect-ratio: 1; right: 8%; top: -49%; border: 1px solid rgba(244, 241, 232, .17); border-radius: 50%; box-shadow: 0 0 0 35px rgba(244,241,232,.04), 0 0 0 70px rgba(244,241,232,.035), 0 0 0 105px rgba(244,241,232,.025); pointer-events: none; }
+      .contact .eyebrow { color: #b4b7aa; margin-bottom: 28px; }
+      .contact h2 { max-width: 850px; font-size: clamp(56px, 8vw, 110px); }
+      .contact h2 em { color: var(--lime); }
+      .contact-bottom { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-top: 38px; }
+      .contact-bottom p { max-width: 300px; margin: 0; color: #b4b7aa; font-size: 14px; line-height: 1.7; }
+      .contact-link { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 17px; padding: 16px 19px; background: var(--lime); color: var(--ink); font-size: 14px; font-weight: 600; }
+      .contact-link svg { width: 16px; }
+      .footer { min-height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      .footer .brand { font-size: 17px; }
+      .footer-note, .footer-social a { color: var(--muted); font: 10px var(--mono); }
+      .footer-social { display: flex; gap: 21px; }
+      .footer-social a:hover { color: var(--ink); }
+      .riverx-badge { position: fixed; z-index: 10; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 12px; padding: 13px 16px; background: var(--ink); color: var(--paper); box-shadow: 0 5px 24px rgba(29, 41, 34, .18); font: 10px/1.4 var(--mono); letter-spacing: .015em; transition: background .2s, transform .2s; }
+      .riverx-badge:hover { background: var(--tomato); transform: translateY(-2px); }
+      .riverx-badge strong { color: var(--lime); font-weight: 500; }
+      .riverx-badge svg { flex: 0 0 14px; width: 14px; }
+      :focus-visible { outline: 2px solid var(--tomato); outline-offset: 4px; }
+
+      @media (min-width: 1500px) { h1 { font-size: 120px; } }
+      @media (max-width: 900px) {
+        .wrap { width: min(100% - 56px, 700px); }
+        .hero { min-height: auto; grid-template-columns: 1fr .82fr; gap: 4%; padding-block: 78px; }
+        h1 { font-size: clamp(64px, 10vw, 92px); }
+        .hero-art { min-height: 390px; }
+        .hero-bottom { align-items: start; flex-direction: column; }
+        .ticker-track { justify-content: center; }
+        .ticker-track span:nth-of-type(n+6) { display: none; }
+        .manifesto-grid { grid-template-columns: .4fr 1.6fr; gap: 5%; }
+      }
+      @media (max-width: 640px) {
+        html { scroll-padding-top: 5rem; }
+        .wrap { width: calc(100% - 40px); }
+        .site-header { height: 72px; position: relative; z-index: 5; }
+        .menu-toggle { display: inline-flex; align-items: center; gap: 8px; font: 11px var(--mono); text-transform: uppercase; }
+        .menu-toggle svg { width: 20px; }
+        .nav-links { display: none; position: absolute; top: 71px; left: -20px; right: -20px; padding: 22px 20px 26px; background: var(--paper); border-bottom: 1px solid var(--line); align-items: stretch; gap: 0; }
+        .nav-links.is-open { display: flex; flex-direction: column; }
+        .nav-links a { padding: 13px 0; border-bottom: 1px solid var(--line); }
+        .nav-links .nav-cta { margin-top: 15px; padding: 13px; border: 1px solid var(--ink); text-align: center; }
+        .hero { display: flex; flex-direction: column; align-items: stretch; gap: 40px; padding-block: 64px 58px; }
+        .hero-kicker { margin-bottom: 23px; }
+        h1 { font-size: clamp(67px, 16vw, 98px); }
+        .hero-bottom { margin-top: 25px; gap: 22px; }
+        .hero-art { min-height: 95vw; max-height: 460px; }
+        .art-sticker { width: 80px; right: 7%; bottom: 13%; }
+        .ticker-track { min-height: 62px; justify-content: space-around; gap: 14px; }
+        .ticker span { font-size: 9px; }
+        .ticker-track span:nth-of-type(4), .ticker-track span:nth-of-type(5), .ticker-track span:nth-of-type(6), .ticker-track span:nth-of-type(7), .ticker-track span:nth-of-type(8) { display: none; }
+        .work-section { padding-block: 82px 88px; }
+        .section-heading, .services-top { display: block; margin-bottom: 30px; }
+        .section-heading > p, .services-top > p { margin-top: 18px; }
+        h2 { font-size: clamp(43px, 12vw, 64px); }
+        .project-grid { display: flex; flex-direction: column; gap: 36px; }
+        .project:nth-child(2), .project:nth-child(3) { width: auto; margin-top: 0; }
+        .project:nth-child(2) .project-image { aspect-ratio: 1.12; }
+        .project:nth-child(3) .project-image { aspect-ratio: 1.12; }
+        .manifesto { padding-block: 68px 72px; }
+        .manifesto-grid { display: block; }
+        .manifesto-label { margin-bottom: 28px; }
+        .manifesto-copy h2 { font-size: clamp(43px, 11vw, 66px); }
+        .manifesto-bottom { display: block; margin-top: 28px; }
+        .manifesto-bottom .arrow-link { margin-top: 24px; }
+        .services { padding-block: 82px 88px; }
+        .services-top { margin-bottom: 31px; }
+        .service-row { grid-template-columns: 32px 1fr 22px; gap: 13px; min-height: 78px; }
+        .service-row h3 { font-size: 18px; }
+        .service-row p { display: none; }
+        .contact { padding-block: 69px 61px; }
+        .contact::after { width: 230px; right: -24%; top: -10%; }
+        .contact h2 { font-size: clamp(57px, 14vw, 86px); }
+        .contact-bottom { display: block; margin-top: 29px; }
+        .contact-link { margin-top: 24px; }
+        .footer { min-height: 100px; flex-wrap: wrap; padding-block: 18px; }
+        .footer-note { order: 3; width: 100%; }
+        .footer-social { gap: 12px; }
+        .riverx-badge { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); gap: 8px; padding: 11px 12px; font-size: 9px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="wrap site-header">
+      <a class="brand" href="#top" aria-label="Goodside home"><span class="brand-mark" aria-hidden="true">✳</span>goodside<sup>®</sup></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span>Menu</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+        <a href="#work">Our work</a>
+        <a href="#studio">The studio</a>
+        <a href="#services">What we do</a>
+        <a class="nav-cta" href="#contact">Have a project? <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="wrap hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow hero-kicker">Independent creative studio · Est. 2018</div>
+          <h1 id="hero-title">A little<br />more <em>good.</em></h1>
+          <div class="hero-bottom">
+            <p>We build thoughtful brands and digital experiences for people making a positive dent in the world.</p>
+            <a class="arrow-link" href="#work">See what we mean <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M6 4h10v10" stroke="currentColor" stroke-width="1.5"/></svg></a>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Original Goodside flower illustration" role="img">
+          <span class="art-index">GS—001 / GOOD ENERGY</span>
+          <svg class="flower-art" viewBox="0 0 500 500" fill="none" aria-hidden="true">
+            <g transform="translate(250 250)">
+              <path d="M0-205C51-205 64-118 101-101C138-64 205-51 205 0C205 51 138 64 101 101C64 138 51 205 0 205C-51 205-64 138-101 101C-138 64-205 51-205 0C-205-51-138-64-101-101C-64-138-51-205 0-205Z" fill="#E65B3F"/>
+              <circle r="147" stroke="#1D2922" stroke-width="1.5"/>
+              <circle r="112" stroke="#1D2922" stroke-width="1.5"/>
+              <circle r="73" fill="#F4F1E8"/>
+              <path d="M-13-28C2-42 24-34 25-17C45-13 42 13 26 17C24 39-3 42-14 26C-35 31-43 8-28-7C-37-24-24-36-13-28Z" fill="#DCE65F"/>
+              <circle r="8" fill="#1D2922"/>
+              <path d="M0-205V-147M205 0H147M0 205V147M-205 0H-147M145-145 104-104M145 145 104 104M-145 145-104 104M-145-145-104-104" stroke="#1D2922" stroke-width="1.5"/>
+            </g>
+          </svg>
+          <span class="art-sticker">A GOOD<br />THING<br />GROWING</span>
+          <span class="art-caption">Made with optimism in Brooklyn, NY</span>
+        </div>
+      </section>
+
+      <div class="ticker" aria-label="Our approach">
+        <div class="wrap ticker-track">
+          <span>Make it matter</span><span class="dot" aria-hidden="true">✳</span>
+          <span>Stay curious</span><span class="dot" aria-hidden="true">✳</span>
+          <span>Leave it better</span><span class="dot" aria-hidden="true">✳</span>
+          <span>Make it matter</span><span class="dot" aria-hidden="true">✳</span>
+        </div>
+      </div>
+
+      <section class="wrap work-section" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">A few things we put into the world</p><h2 id="work-title">Good work.<br /><em>Good people.</em></h2></div>
+          <p>Different challenges, shared ambition: to make something people are glad exists.</p>
+        </div>
+        <div class="project-grid">
+          <a class="project" href="#contact" aria-label="Read about Fieldwork Coffee">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&amp;fit=crop&amp;w=1300&amp;q=85" alt="Warm, sunlit neighborhood coffee shop interior" loading="lazy" />
+              <span class="project-label">Food &amp; drink</span>
+            </div>
+            <div class="project-meta"><div><h3>Fieldwork Coffee</h3><p>A daily ritual, reimagined · Strategy, Identity, Digital</p></div><span class="year">2025</span></div>
+          </a>
+          <a class="project" href="#contact" aria-label="Read about Ordinary Objects">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="Sculptural contemporary furniture in a calm, minimal interior" loading="lazy" />
+              <span class="project-label">Home &amp; living</span>
+            </div>
+            <div class="project-meta"><div><h3>Ordinary Objects</h3><p>Less, but a little lovelier · Identity, Art direction</p></div><span class="year">2024</span></div>
+          </a>
+          <a class="project" href="#contact" aria-label="Read about Kinfield">
+            <div class="project-image">
+              <img src="https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Sunlight filtering through a lush green forest" loading="lazy" />
+              <span class="project-label">Climate &amp; culture</span>
+            </div>
+            <div class="project-meta"><div><h3>Kinfield</h3><p>A brighter path outdoors · Strategy, Identity, Campaign</p></div><span class="year">2024</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section class="manifesto" id="studio" aria-labelledby="manifesto-title">
+        <div class="wrap manifesto-grid">
+          <div class="eyebrow manifesto-label">The Goodside idea — 01</div>
+          <div class="manifesto-copy">
+            <h2 id="manifesto-title">The world has enough <em>same.</em> Let's make something that feels like a <em>yes.</em></h2>
+            <div class="manifesto-bottom">
+              <p>Goodside is a small, senior team of strategists, designers, and serial optimists. We partner with people who give a damn, then make work that's impossible to ignore and easy to love.</p>
+              <a class="arrow-link" href="#contact">A bit about us <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M6 4h10v10" stroke="currentColor" stroke-width="1.5"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wrap services" id="services" aria-labelledby="services-title">
+        <div class="services-top">
+          <div><p class="eyebrow">Small team, whole picture</p><h2 id="services-title">What we bring.</h2></div>
+          <p>From the first big question to the final tiny detail, we make the pieces work beautifully together.</p>
+        </div>
+        <div class="service-list">
+          <div class="service-row"><span class="service-number">01</span><h3>Brand strategy &amp; story</h3><p>Positioning, naming, voice &amp; messaging</p><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="service-row"><span class="service-number">02</span><h3>Visual identity</h3><p>Identity systems, art direction &amp; guidelines</p><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="service-row"><span class="service-number">03</span><h3>Digital experiences</h3><p>Websites, e-commerce &amp; digital products</p><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="service-row"><span class="service-number">04</span><h3>Campaigns &amp; content</h3><p>Ideas, images &amp; things people share</p><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        </div>
+      </section>
+
+      <section class="contact" id="contact" aria-labelledby="contact-title">
+        <div class="wrap">
+          <p class="eyebrow">For good things, and the people behind them</p>
+          <h2 id="contact-title">Let's make<br />something <em>matter.</em></h2>
+          <div class="contact-bottom">
+            <p>Have a big idea, a small question, or a very good dog photo? Our inbox is open.</p>
+            <a class="contact-link" href="mailto:hello@goodside.studio">Tell us about it <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M6 4h10v10" stroke="currentColor" stroke-width="1.5"/></svg></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap footer">
+      <a class="brand" href="#top" aria-label="Goodside home"><span class="brand-mark" aria-hidden="true">✳</span>goodside<sup>®</sup></a>
+      <span class="footer-note">Independent by nature. Goodside by choice. © 2025</span>
+      <div class="footer-social"><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LINKEDIN ↗</a></div>
+    </footer>
+    <a class="riverx-badge" href="https://riverx.app" aria-label="Created with GPT-6 Luna, Built with RiverX">
+      <span>Created with GPT-6 Luna,<br /><strong>Built with RiverX</strong></span>
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 16 16 4M6 4h10v10" stroke="currentColor" stroke-width="1.5"/></svg>
+    </a>
+    <script>
+      const menuButton = document.querySelector(".menu-toggle");
+      const navigation = document.querySelector(".nav-links");
+
+      menuButton.addEventListener("click", () => {
+        const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+        menuButton.setAttribute("aria-expanded", String(!isOpen));
+        navigation.classList.toggle("is-open", !isOpen);
+      });
+
+      navigation.addEventListener("click", (event) => {
+        if (event.target.closest("a")) {
+          menuButton.setAttribute("aria-expanded", "false");
+          navigation.classList.remove("is-open");
+        }
+      });
+    </script>
+  </body>
 </html>
